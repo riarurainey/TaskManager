@@ -1,49 +1,33 @@
-import java.util.HashMap;
-import java.util.Map;
 
-//Главный класс от которого наследуются класс Epic и Subtask
-//В классе Task есть мапа Эпиков, а у Эпиков есть мапа Сабтасков
 public class Task {
-    private String name;
-    private String description;
-    private final int id;
-    private static int countId = 0;
+    private final String name;
+    private final String description;
+    private final long id;
     private Status status;
-    private final HashMap<Integer, Epic> epicHashMap = new HashMap<>();
 
-    public Task(String name, String description) {
+    public Task(String name, String description, long id) {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
-        id = ++countId;
-
+        this.id = id;
     }
 
-    public HashMap<Integer, Epic> getEpicHashMap() {
-        return epicHashMap;
-    }
-
-    public static int getCountId() {
-        return countId;
+    public Task(String name, String description, long id, Status status) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -57,16 +41,10 @@ public class Task {
 
     @Override
     public String toString() {
-        StringBuilder taskToString = new StringBuilder();
-
-        for (Map.Entry<Integer, Epic> map : epicHashMap.entrySet()) {
-            taskToString.append(map.getValue().toString()).append("\n");
-        }
-
         return "ID Задачи: " + id + "\n" +
                 "Название задачи: " + name + '\n' +
                 "Описание задачи: " + description + '\n' +
-                "Статус задачи: " + status + '\n' +
-                "Список эпиков задачи: " + '\n' + taskToString;
+                "Статус задачи: " + status + '\n';
+
     }
 }

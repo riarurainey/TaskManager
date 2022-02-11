@@ -1,34 +1,28 @@
+
 public class SubTask extends Task {
-    private final int id;
-    private Status status;
+    private final long epicId;
 
-
-    public SubTask(String name, String description) {
-        super(name, description);
-        this.id = super.getId();
-        setStatus(Status.NEW);
+    public SubTask(String name, String description, long id, long epicId) {
+        super(name, description, id);
+        this.epicId = epicId;
     }
 
-    @Override
-    public Status getStatus() {
-        return status;
+    public SubTask(String name, String description, long id, long epicId, Status status) {
+        super(name, description, id);
+        this.epicId = epicId;
+        setStatus(status);
     }
 
-    @Override
-    public int getId() {
-        return this.id;
-    }
-
-    @Override
-    public void setStatus(Status status) {
-        this.status = status;
+    public long getEpicId() {
+        return epicId;
     }
 
     @Override
     public String toString() {
-        return "ID Подзадачи: " + this.id + "\n" +
-                "Название подзадачи: " + this.getName() + "\n" +
-                "Описание подзадачи: " + this.getDescription() + "\n" +
-                "Статус подзадачи: " + this.status;
+        return "ID Подзадачи: " + getId() + "\n" +
+                "Название подзадачи: " + getName() + "\n" +
+                "Описание подзадачи: " + getDescription() + "\n" +
+                "Статус подзадачи: " + getStatus() + "\n" +
+                "Подзадача привязана к Эпику с ID: " + epicId;
     }
 }
