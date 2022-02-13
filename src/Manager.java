@@ -1,7 +1,4 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Manager {
     HashMap<Long, Task> tasks = new HashMap<>();
@@ -15,23 +12,20 @@ public class Manager {
     }
 
     //Создание задачи
-    public Task createTask(String name, String description) {
-        Task task = new Task(name, description, generateId());
+    public Task createTask(Task task) {
         tasks.put(task.getId(), task);
         return task;
     }
 
     //Создание Эпика
-    public Epic createEpic(String name, String description) {
-        Epic epic = new Epic(name, description, generateId());
+    public Epic createEpic(Epic epic) {
         epics.put(epic.getId(), epic);
         return epic;
     }
 
     //Создание подзадачи
-    public SubTask createSubTask(String name, String description, long epicID) {
-        SubTask subTask = new SubTask(name, description, generateId(), epicID);
-        epics.get(epicID).getSubTaskHashMap().put(subTask.getId(), subTask);
+    public SubTask createSubTask(SubTask subTask) {
+        epics.get(subTask.getEpicId()).getSubTaskHashMap().put(subTask.getId(), subTask);
         return subTask;
     }
 
@@ -68,36 +62,37 @@ public class Manager {
     public SubTask deleteSubTaskById(long id) {
         SubTask subTask = findSubTaskById(id);
         if (subTask != null) {
-            return epics.get(subTask.getEpicId()).getSubTaskHashMap().remove(id);
+            epics.get(subTask.getEpicId()).getSubTaskHashMap().remove(id);
+            changeEpicStatus(epics.get(subTask.getEpicId()));
+            return subTask;
         }
         return null;
     }
 
     //Обновление задачи
-    public Task updateTask(Task task, long id) {
-        if (tasks.containsKey(id)) {
-            tasks.put(id, task);
+    public Task updateTask(Task task) {
+        if (tasks.containsKey(task.getId())) {
+            tasks.put(task.getId(), task);
             return task;
         }
         return null;
     }
 
     //Обновление эпика
-    public Epic updateEpic(Epic epic, long id) {
-        if (epics.containsKey(id)) {
-            changeEpicStatus(epic);
-            epics.put(id, epic);
+    public Epic updateEpic(Epic epic) {
+        if (epics.containsKey(epic.getId())) {
+            epics.put(epic.getId(), epic);
             return epic;
         }
         return null;
     }
 
     //Обновление подзадачи
-    public SubTask updateSubTask(SubTask subTask, long id) {
+    public SubTask updateSubTask(SubTask subTask) {
         if (epics.containsValue(epics.get(subTask.getEpicId()))
-                && epics.get(subTask.getEpicId()).getSubTaskHashMap().containsKey(id)) {
+                && epics.get(subTask.getEpicId()).getSubTaskHashMap().containsKey(subTask.getId())) {
 
-            epics.get(subTask.getEpicId()).getSubTaskHashMap().put(id, subTask);
+            epics.get(subTask.getEpicId()).getSubTaskHashMap().put(subTask.getId(), subTask);
             changeEpicStatus(epics.get(subTask.getEpicId()));
             return subTask;
         }
@@ -105,16 +100,16 @@ public class Manager {
     }
 
     //Вывод всех подзадач Эпика
-    public void printEpicsSubtask(long id) {
-        StringBuilder subTaskToString = new StringBuilder();
+    public ArrayList<SubTask> printEpicsSubtask(long id) {
+        ArrayList<SubTask> subTasksList = new ArrayList<>();
         Epic epic = epics.get(id);
         if (epic != null) {
             for (Map.Entry<Long, SubTask> epicEntry : epic.getSubTaskHashMap().entrySet()) {
-                subTaskToString.append(epicEntry.getValue().toString()).append("\n");
+                subTasksList.add(epicEntry.getValue());
             }
-            System.out.println("Список подзадач Эпика с ID " + id + ":\n\n" + subTaskToString);
+            return subTasksList;
         } else {
-            System.out.println("Эпика с таким ID не существует");
+            return null;
         }
     }
 
@@ -134,13 +129,17 @@ public class Manager {
     }
 
     // Показать список всех задач
-    public void printAllTasks() {
+    public ArrayList<Task> printAllTasks() {
+        ArrayList<Task> list = new ArrayList<>();
+
         for (Map.Entry<Long, Task> taskEntry : tasks.entrySet()) {
-            System.out.println(taskEntry.getValue());
+            list.add(taskEntry.getValue());
         }
+
         for (Map.Entry<Long, Epic> epicEntry : epics.entrySet()) {
-            System.out.println(epicEntry.getValue());
+            list.add(epicEntry.getValue());
         }
+        return list;
     }
 
     // Удалить сразу все задачи
