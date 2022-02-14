@@ -1,18 +1,22 @@
-
 public class Task {
     private final String name;
     private final String description;
-    private final long id;
+    private Long id;
     private Status status;
 
-    public Task(String name, String description, long id) {
+    public Task(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.status = Status.NEW;
+    }
+    public Task(String name, String description, Long id) {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
         this.id = id;
     }
 
-    public Task(String name, String description, long id, Status status) {
+    public Task(String name, String description, Long id, Status status) {
         this.name = name;
         this.description = description;
         this.status = status;
@@ -29,6 +33,9 @@ public class Task {
 
     public long getId() {
         return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Status getStatus() {

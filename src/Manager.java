@@ -13,18 +13,21 @@ public class Manager {
 
     //Создание задачи
     public Task createTask(Task task) {
+        task.setId(generateId());
         tasks.put(task.getId(), task);
         return task;
     }
 
     //Создание Эпика
     public Epic createEpic(Epic epic) {
+        epic.setId(generateId());
         epics.put(epic.getId(), epic);
         return epic;
     }
 
     //Создание подзадачи
     public SubTask createSubTask(SubTask subTask) {
+        subTask.setId(generateId());
         epics.get(subTask.getEpicId()).getSubTaskHashMap().put(subTask.getId(), subTask);
         return subTask;
     }

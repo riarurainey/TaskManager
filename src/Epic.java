@@ -4,7 +4,11 @@ import java.util.Map;
 public class Epic extends Task {
     private final HashMap<Long, SubTask> subTaskHashMap = new HashMap<>();
 
-    public Epic(String name, String description, long id) {
+    public Epic(String name, String description) {
+        super(name, description);
+    }
+
+    public Epic(String name, String description, Long id) {
         super(name, description, id);
     }
 
