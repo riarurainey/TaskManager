@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Manager {
+public class InMemoryTaskManager implements TaskManager {
     HashMap<Long, Task> tasks = new HashMap<>();
     HashMap<Long, Epic> epics = new HashMap<>();
 
@@ -12,6 +12,7 @@ public class Manager {
     }
 
     //Создание задачи
+    @Override
     public Task createTask(Task task) {
         task.setId(generateId());
         tasks.put(task.getId(), task);
@@ -19,6 +20,7 @@ public class Manager {
     }
 
     //Создание Эпика
+    @Override
     public Epic createEpic(Epic epic) {
         epic.setId(generateId());
         epics.put(epic.getId(), epic);
@@ -26,6 +28,7 @@ public class Manager {
     }
 
     //Создание подзадачи
+    @Override
     public SubTask createSubTask(SubTask subTask) {
         subTask.setId(generateId());
         epics.get(subTask.getEpicId()).getSubTaskHashMap().put(subTask.getId(), subTask);
@@ -33,35 +36,44 @@ public class Manager {
     }
 
     //Поиск задачи по id
+    @Override
     public Task findTaskById(long id) {
+        addToHistory(tasks.get(id));
         return tasks.get(id);
     }
 
     //Поиск Эпика по id
+    @Override
     public Epic findEpicById(long id) {
+        addToHistory(epics.get(id));
         return epics.get(id);
     }
 
     //Поиск подзадачи по id
+    @Override
     public SubTask findSubTaskById(long id) {
         SubTask subTask = null;
         for (Map.Entry<Long, Epic> epicEntry : epics.entrySet()) {
             subTask = epicEntry.getValue().getSubTaskHashMap().get(id);
         }
+        addToHistory(subTask);
         return subTask;
     }
 
     //Удаление задачи по id
+    @Override
     public Task deleteTaskById(long id) {
         return tasks.remove(id);
     }
 
     //Удаление эпика по id
+    @Override
     public Epic deleteEpicById(long id) {
         return epics.remove(id);
     }
 
     //Удаление подзадачи по id
+    @Override
     public SubTask deleteSubTaskById(long id) {
         SubTask subTask = findSubTaskById(id);
         if (subTask != null) {
@@ -73,6 +85,7 @@ public class Manager {
     }
 
     //Обновление задачи
+    @Override
     public Task updateTask(Task task) {
         if (tasks.containsKey(task.getId())) {
             tasks.put(task.getId(), task);
@@ -82,6 +95,7 @@ public class Manager {
     }
 
     //Обновление эпика
+    @Override
     public Epic updateEpic(Epic epic) {
         if (epics.containsKey(epic.getId())) {
             epics.put(epic.getId(), epic);
@@ -91,6 +105,7 @@ public class Manager {
     }
 
     //Обновление подзадачи
+    @Override
     public SubTask updateSubTask(SubTask subTask) {
         if (epics.containsValue(epics.get(subTask.getEpicId()))
                 && epics.get(subTask.getEpicId()).getSubTaskHashMap().containsKey(subTask.getId())) {
@@ -103,8 +118,9 @@ public class Manager {
     }
 
     //Вывод всех подзадач Эпика
-    public ArrayList<SubTask> printEpicsSubtask(long id) {
-        ArrayList<SubTask> subTasksList = new ArrayList<>();
+    @Override
+    public List<SubTask> printEpicsSubtask(long id) {
+        List<SubTask> subTasksList = new ArrayList<>();
         Epic epic = epics.get(id);
         if (epic != null) {
             for (Map.Entry<Long, SubTask> epicEntry : epic.getSubTaskHashMap().entrySet()) {
@@ -132,8 +148,9 @@ public class Manager {
     }
 
     // Показать список всех задач
-    public ArrayList<Task> printAllTasks() {
-        ArrayList<Task> list = new ArrayList<>();
+    @Override
+    public List<Task> printAllTasks() {
+        List<Task> list = new ArrayList<>();
 
         for (Map.Entry<Long, Task> taskEntry : tasks.entrySet()) {
             list.add(taskEntry.getValue());
@@ -146,8 +163,28 @@ public class Manager {
     }
 
     // Удалить сразу все задачи
+    @Override
     public void deleteAllTasks() {
         tasks.clear();
         epics.clear();
+    }
+
+    //Добавление задач в историю просмотров
+    private void addToHistory(Task task) {
+        if (task == null) {
+            return;
+        }
+        if (history.size() == 10) {
+            history.remove(0);
+        }
+        history.add(task);
+    }
+
+    List<Task> history = new LinkedList<>();
+
+    @Override
+    public List<Task> history() {
+        return history;
+
     }
 }
