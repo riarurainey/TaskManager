@@ -3,6 +3,7 @@ import java.util.*;
 public class InMemoryTaskManager implements TaskManager {
     HashMap<Long, Task> tasks = new HashMap<>();
     HashMap<Long, Epic> epics = new HashMap<>();
+    HistoryManager history = Managers.getDefaultHistory();
 
     private static long id = 1;
 
@@ -38,14 +39,14 @@ public class InMemoryTaskManager implements TaskManager {
     //Поиск задачи по id
     @Override
     public Task findTaskById(long id) {
-        addToHistory(tasks.get(id));
+        history.add(tasks.get(id));
         return tasks.get(id);
     }
 
     //Поиск Эпика по id
     @Override
     public Epic findEpicById(long id) {
-        addToHistory(epics.get(id));
+        history.add(epics.get(id));
         return epics.get(id);
     }
 
@@ -56,7 +57,7 @@ public class InMemoryTaskManager implements TaskManager {
         for (Map.Entry<Long, Epic> epicEntry : epics.entrySet()) {
             subTask = epicEntry.getValue().getSubTaskHashMap().get(id);
         }
-        addToHistory(subTask);
+        history.add(subTask);
         return subTask;
     }
 
@@ -169,22 +170,9 @@ public class InMemoryTaskManager implements TaskManager {
         epics.clear();
     }
 
-    //Добавление задач в историю просмотров
-    private void addToHistory(Task task) {
-        if (task == null) {
-            return;
-        }
-        if (history.size() == 10) {
-            history.remove(0);
-        }
-        history.add(task);
-    }
-
-    List<Task> history = new LinkedList<>();
-
+    //Вызов метода получение истории из класса InMemoryHistoryManager
     @Override
     public List<Task> history() {
-        return history;
-
+        return history.getHistory();
     }
 }
