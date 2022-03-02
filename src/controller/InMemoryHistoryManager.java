@@ -1,3 +1,7 @@
+package controller;
+
+import model.Task;
+
 import java.util.LinkedList;
 import java.util.List;
 

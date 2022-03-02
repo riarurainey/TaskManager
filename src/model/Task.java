@@ -1,3 +1,5 @@
+package model;
+
 public class Task {
     private final String name;
     private final String description;
@@ -9,6 +11,7 @@ public class Task {
         this.description = description;
         this.status = Status.NEW;
     }
+
     public Task(String name, String description, Long id) {
         this.name = name;
         this.description = description;
@@ -34,6 +37,7 @@ public class Task {
     public long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }

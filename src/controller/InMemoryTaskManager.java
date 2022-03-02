@@ -1,3 +1,10 @@
+package controller;
+
+import model.Epic;
+import model.Status;
+import model.SubTask;
+import model.Task;
+
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
@@ -170,7 +177,7 @@ public class InMemoryTaskManager implements TaskManager {
         epics.clear();
     }
 
-    //Вызов метода получение истории из класса InMemoryHistoryManager
+    //Вызов метода получение истории из класса controller.InMemoryHistoryManager
     @Override
     public List<Task> history() {
         return history.getHistory();
