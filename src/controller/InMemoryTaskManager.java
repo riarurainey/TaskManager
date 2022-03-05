@@ -63,7 +63,9 @@ public class InMemoryTaskManager implements TaskManager {
         SubTask subTask = null;
         for (Map.Entry<Long, Epic> epicEntry : epics.entrySet()) {
             subTask = epicEntry.getValue().getSubTaskHashMap().get(id);
+            break;
         }
+
         history.add(subTask);
         return subTask;
     }
@@ -71,12 +73,14 @@ public class InMemoryTaskManager implements TaskManager {
     //Удаление задачи по id
     @Override
     public Task deleteTaskById(long id) {
+        history.remove(id);
         return tasks.remove(id);
     }
 
     //Удаление эпика по id
     @Override
     public Epic deleteEpicById(long id) {
+        history.remove(id);
         return epics.remove(id);
     }
 
@@ -84,11 +88,13 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public SubTask deleteSubTaskById(long id) {
         SubTask subTask = findSubTaskById(id);
+
         if (subTask != null) {
             epics.get(subTask.getEpicId()).getSubTaskHashMap().remove(id);
             changeEpicStatus(epics.get(subTask.getEpicId()));
             return subTask;
         }
+        history.remove(id);
         return null;
     }
 

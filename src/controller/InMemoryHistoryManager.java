@@ -2,20 +2,12 @@ package controller;
 
 import model.Task;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    final int capacity;
-    List<Task> history = new LinkedList<>();
-
-    public InMemoryHistoryManager(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public InMemoryHistoryManager() {
-        this(10);
-    }
+    Node first;
+    Node last;
+    Map<Long, Node> map = new HashMap<>();
 
     //Добавление в историю
     @Override
@@ -23,15 +15,54 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (task == null) {
             return;
         }
-        if (history.size() == capacity) {
-            history.remove(0);
+        linkLast(task);
+    }
+
+    //удаление из истории
+    @Override
+    public void remove(long id) {
+        final Node old = map.remove(id);
+        removeNode(old);
+    }
+
+    //удаление узла
+    private void removeNode(Node old) {
+        if (old != null) {
+            if (old == first) {
+                first = old.next;
+            } else if (old == last) {
+                last = old.prev;
+                last.next = null;
+            } else {
+                old.prev.next = old.next;
+            }
         }
-        history.add(task);
+    }
+
+    //добавление в конец
+    private void linkLast(Task task) {
+        remove(task.getId());
+        final Node newNode = new Node(task);
+        if (first == null) {
+            first = newNode;
+        } else {
+            last.next = newNode;
+            newNode.prev = last;
+            last = newNode;
+        }
+        last = newNode;
+        map.put(task.getId(), newNode);
     }
 
     //Получение истории
     @Override
     public List<Task> getHistory() {
-        return history;
+        final List<Task> tasks = new ArrayList<>();
+        Node current = first;
+        while (current != null) {
+            tasks.add(current.task);
+            current = current.next;
+        }
+        return tasks;
     }
 }
