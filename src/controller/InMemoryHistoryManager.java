@@ -54,9 +54,8 @@ public class InMemoryHistoryManager implements HistoryManager {
         map.put(task.getId(), newNode);
     }
 
-    //Получение истории
-    @Override
-    public List<Task> getHistory() {
+   // метод собирает задачи в лист
+    public List<Task> getTasks() {
         final List<Task> tasks = new ArrayList<>();
         Node current = first;
         while (current != null) {
@@ -64,5 +63,10 @@ public class InMemoryHistoryManager implements HistoryManager {
             current = current.next;
         }
         return tasks;
+    }
+    //Получение истории
+    @Override
+    public List<Task> getHistory() {
+        return getTasks();
     }
 }
