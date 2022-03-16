@@ -1,4 +1,4 @@
-package controller;
+package managers;
 
 import model.Task;
 
@@ -67,6 +67,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     //Получение истории
     @Override
     public List<Task> getHistory() {
+
         return getTasks();
     }
 }

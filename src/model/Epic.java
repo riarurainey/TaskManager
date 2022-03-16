@@ -4,14 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Epic extends Task {
+
     private final HashMap<Long, SubTask> subTaskHashMap = new HashMap<>();
 
     public Epic(String name, String description) {
         super(name, description);
+        typeTasks = TypeTasks.EPIC;
     }
 
-    public Epic(String name, String description, Long id) {
-        super(name, description, id);
+    public Epic(String name, String description, Long id, Status status) {
+        super(name, description, id, status);
+        typeTasks = TypeTasks.EPIC;
     }
 
     public HashMap<Long, SubTask> getSubTaskHashMap() {

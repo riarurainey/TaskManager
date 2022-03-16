@@ -1,4 +1,4 @@
-package controller;
+package managers;
 
 import model.Epic;
 import model.Status;
@@ -147,7 +147,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     //Изменение статуса у Эпика
-    private void changeEpicStatus(Epic epic) {
+    void changeEpicStatus(Epic epic) {
         Set<Status> statusSet = new HashSet<>();
         for (Map.Entry<Long, SubTask> subtaskEntry : epics.get(epic.getId()).getSubTaskHashMap().entrySet()) {
             statusSet.add(subtaskEntry.getValue().getStatus());
@@ -186,6 +186,7 @@ public class InMemoryTaskManager implements TaskManager {
     //Вызов метода получение истории из класса controller.InMemoryHistoryManager
     @Override
     public List<Task> history() {
+
         return history.getHistory();
     }
 }

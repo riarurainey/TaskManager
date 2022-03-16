@@ -1,9 +1,9 @@
 package model;
 
-public enum Status {
-    NEW("NEW"),
-    IN_PROGRESS("IN_PROGRESS"),
-    DONE("DONE");
+public enum TypeTasks {
+    TASK("Task"),
+    EPIC("Epic"),
+    SUBTASK("SubTask");
 
     private final String value;
 
@@ -11,7 +11,7 @@ public enum Status {
         return value;
     }
 
-    Status(String value) {
+    TypeTasks(String value) {
         this.value = value;
 
     }

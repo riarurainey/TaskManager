@@ -6,10 +6,19 @@ public class Task {
     private Long id;
     private Status status;
 
+    public TypeTasks getTypeTasks() {
+        return typeTasks;
+    }
+
+    TypeTasks typeTasks;
+
+
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
+        typeTasks = TypeTasks.TASK;
+
     }
 
     public Task(String name, String description, Long id) {
@@ -17,6 +26,8 @@ public class Task {
         this.description = description;
         this.status = Status.NEW;
         this.id = id;
+        typeTasks = TypeTasks.TASK;
+
     }
 
     public Task(String name, String description, Long id, Status status) {
@@ -24,7 +35,12 @@ public class Task {
         this.description = description;
         this.status = status;
         this.id = id;
+        typeTasks = TypeTasks.TASK;
+
     }
+
+
+
 
     public String getName() {
         return name;
@@ -50,6 +66,8 @@ public class Task {
         this.status = status;
     }
 
+
+
     @Override
     public String toString() {
         return "ID Задачи: " + id + "\n" +
@@ -58,4 +76,5 @@ public class Task {
                 "Статус задачи: " + status + '\n';
 
     }
+
 }
