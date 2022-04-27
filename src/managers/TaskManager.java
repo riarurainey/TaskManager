@@ -5,6 +5,7 @@ import model.SubTask;
 import model.Task;
 
 import java.util.List;
+import java.util.TreeSet;
 
 public interface TaskManager {
     //Создание задачи
@@ -44,13 +45,16 @@ public interface TaskManager {
     SubTask updateSubTask(SubTask subTask);
 
     //Вывод всех подзадач Эпика
-    List<SubTask> printEpicsSubtask(long id);
+    List<SubTask> getEpicsSubtask(long id);
 
     // Показать список всех задач
-    List<Task> printAllTasks();
+    List<Task> getAllTasks();
 
     // Удалить сразу все задачи
     void deleteAllTasks();
 
     List<Task> history();
+
+    TreeSet<Task> getPrioritizedTasks();
+
 }

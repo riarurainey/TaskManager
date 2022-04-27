@@ -1,6 +1,7 @@
 package model;
 
 public enum Status {
+
     NEW("NEW"),
     IN_PROGRESS("IN_PROGRESS"),
     DONE("DONE");
@@ -13,6 +14,5 @@ public enum Status {
 
     Status(String value) {
         this.value = value;
-
     }
 }

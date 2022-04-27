@@ -1,9 +1,9 @@
-id,type,name,status,description,epic
-1,TASK,Имя1,NEW,Описание
-2,TASK,Имя2,NEW,Описание
-3,EPIC,EpicName1,NEW,Desp
-4,EPIC,EpicName2,NEW,des
-5,SUBTASK,SubTask1,NEW,des,3
-6,SUBTASK,SubTask2,NEW,des,3
+id,type,name,status,description,epic,duration,start_time
+1,TASK,Имя2,NEW,Описание,-,null,null
+2,TASK,Имя3,NEW,Описание,-,null,null
+3,EPIC,Эпик4,NEW,Описание эпика,-,null,null
+4,EPIC,Эпик5,NEW,Описание эпика,-,null,null
+5,EPIC,Эпик6,NEW,Описание эпика,-,null,null
+6,SUBTASK,Subtask,NEW,desc,3,null,null
 
-1,2,3,4,5,
+6,

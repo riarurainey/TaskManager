@@ -2,7 +2,10 @@ package managers;
 
 import model.Task;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
     Node first;
@@ -54,7 +57,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         map.put(task.getId(), newNode);
     }
 
-   // метод собирает задачи в лист
+    // метод собирает задачи в лист
     public List<Task> getTasks() {
         final List<Task> tasks = new ArrayList<>();
         Node current = first;
@@ -64,10 +67,10 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         return tasks;
     }
+
     //Получение истории
     @Override
     public List<Task> getHistory() {
-
         return getTasks();
     }
 }
