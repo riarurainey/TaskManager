@@ -21,14 +21,14 @@ public class InMemoryHistoryManager implements HistoryManager {
         linkLast(task);
     }
 
-    //удаление из истории
+    //Удаление из истории
     @Override
     public void remove(long id) {
         final Node old = map.remove(id);
         removeNode(old);
     }
 
-    //удаление узла
+    //Удаление узла
     private void removeNode(Node old) {
         if (old != null) {
             if (old == first) {
@@ -42,7 +42,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
-    //добавление в конец
+    //Добавление в конец
     private void linkLast(Task task) {
         remove(task.getId());
         final Node newNode = new Node(task);
@@ -57,7 +57,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         map.put(task.getId(), newNode);
     }
 
-    // метод собирает задачи в лист
+    // Метод собирает задачи в лист
     public List<Task> getTasks() {
         final List<Task> tasks = new ArrayList<>();
         Node current = first;
