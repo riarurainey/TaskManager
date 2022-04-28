@@ -6,12 +6,12 @@ import java.util.Objects;
 
 public class Task {
 
-    protected String name;
-    protected String description;
-    protected Long id;
-    protected Status status;
-    protected Long duration;
-    protected LocalDateTime startTime;
+    private String name;
+    private String description;
+    private Long id;
+    private Status status;
+    private Long duration;
+    private LocalDateTime startTime;
     TypeTasks typeTasks;
 
     public Task(String name, String description) {

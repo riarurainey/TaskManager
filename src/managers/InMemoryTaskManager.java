@@ -8,7 +8,6 @@ import model.Task;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -52,7 +51,7 @@ public class InMemoryTaskManager implements TaskManager {
         checkIntersection(subTask);
         if (epics.get(subTask.getEpicId()) != null) {
             epics.get(subTask.getEpicId()).getSubTaskHashMap().put(subTask.getId(), subTask);
-            changeEpicStartTime(epics.get(subTask.getEpicId()));
+            changeEpicTimeFields(epics.get(subTask.getEpicId()));
             return subTask;
         } else {
             return null;
@@ -109,6 +108,7 @@ public class InMemoryTaskManager implements TaskManager {
 
         if (subTask != null) {
             epics.get(subTask.getEpicId()).getSubTaskHashMap().remove(id);
+            changeEpicTimeFields(epics.get(subTask.getEpicId()));
             changeEpicStatus(epics.get(subTask.getEpicId()));
             return subTask;
         }
@@ -153,6 +153,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
 
             epics.get(subTask.getEpicId()).getSubTaskHashMap().put(subTask.getId(), subTask);
+            changeEpicTimeFields(epics.get(subTask.getEpicId()));
             changeEpicStatus(epics.get(subTask.getEpicId()));
             return subTask;
         }
@@ -215,7 +216,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     //Изменение времени у эпика
-    void changeEpicStartTime(Epic epic) {
+   private void changeEpicTimeFields(Epic epic) {
         Long epicsDuration = null;
         LocalDateTime epicEndTime = null;
         LocalDateTime epicStartTime = null;
@@ -249,7 +250,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     //Изменение статуса у Эпика
-    public void changeEpicStatus(Epic epic) {
+    private void changeEpicStatus(Epic epic) {
         Set<Status> statusSet = new HashSet<>();
         for (Map.Entry<Long, SubTask> subtaskEntry : epics.get(epic.getId()).getSubTaskHashMap().entrySet()) {
             statusSet.add(subtaskEntry.getValue().getStatus());

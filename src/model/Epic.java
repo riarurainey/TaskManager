@@ -61,12 +61,12 @@ public class Epic extends Task {
             epicToString.append(map.getValue().toString()).append("\n");
         }
 
-        return "ID Эпика: " + super.id + "\n" +
-                "Название эпика: " + super.name + '\n' +
-                "Описание эпика: " + super.description + '\n' +
-                "Статус эпика: " + super.status + '\n' +
-                "Продолжительность эпика: " + super.duration + "\n" +
-                "Дата и время начала эпика: " + super.startTime + "\n" +
+        return "ID Эпика: " + getId() + "\n" +
+                "Название эпика: " + getName() + '\n' +
+                "Описание эпика: " + getDescription() + '\n' +
+                "Статус эпика: " + getStatus() + '\n' +
+                "Продолжительность эпика: " + getDuration() + "\n" +
+                "Дата и время начала эпика: " + getStartTime() + "\n" +
                 "Время завершения эпика: " + getEndTime() + "\n" +
                 "Список подзадач Эпика: " + '\n' + epicToString;
     }

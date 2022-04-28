@@ -73,13 +73,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     @Override
     public SubTask deleteSubTaskById(long id) {
-        SubTask subTask = findSubTaskById(id);
-
-        if (subTask != null) {
-            epics.get(subTask.getEpicId()).getSubTaskHashMap().remove(id);
-            changeEpicStatus(epics.get(subTask.getEpicId()));
-            return subTask;
-        }
+        super.deleteSubTaskById(id);
         history.remove(id);
         save();
         return null;

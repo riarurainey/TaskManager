@@ -53,8 +53,10 @@ public interface TaskManager {
     // Удалить сразу все задачи
     void deleteAllTasks();
 
+    //Получение листа истории
     List<Task> history();
 
+    //Получение задач и подзадач по приоритету старта начала
     TreeSet<Task> getPrioritizedTasks();
 
 }

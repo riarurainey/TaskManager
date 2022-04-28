@@ -48,13 +48,13 @@ public class SubTask extends Task {
 
     @Override
     public String toString() {
-        return "ID Подзадачи: " + super.id + "\n" +
-                "Название подзадачи: " + super.name + "\n" +
-                "Описание подзадачи: " + super.description + "\n" +
-                "Статус подзадачи: " + super.status + "\n" +
+        return "ID Подзадачи: " + getId() + "\n" +
+                "Название подзадачи: " + getName() + "\n" +
+                "Описание подзадачи: " + getDescription() + "\n" +
+                "Статус подзадачи: " + getStatus() + "\n" +
                 "Подзадача привязана к Эпику с ID: " + epicId + "\n" +
-                "Продолжительность подзадачи (в мин): " + super.duration + "\n" +
-                "Дата и время начала подзадачи: " + super.startTime + "\n" +
+                "Продолжительность подзадачи (в мин): " + getDuration() + "\n" +
+                "Дата и время начала подзадачи: " + getStartTime() +"\n" +
                 "Время завершения подзадачи: " + getEndTime() + "\n";
 
     }
