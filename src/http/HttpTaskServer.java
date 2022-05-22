@@ -118,7 +118,6 @@ public class HttpTaskServer {
         }
     }
 
-
     public final class EpicHandler implements HttpHandler {
 
         @Override
@@ -175,7 +174,6 @@ public class HttpTaskServer {
             }
         }
     }
-
 
     public final class SubTaskHandler implements HttpHandler {
 
@@ -317,7 +315,6 @@ public class HttpTaskServer {
     protected String readText(HttpExchange h) throws IOException {
         return new String(h.getRequestBody().readAllBytes(), UTF_8);
     }
-
 
     protected void send(HttpExchange h, Object object, int code) throws IOException {
         String json = gson.toJson(object);
