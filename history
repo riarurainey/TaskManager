@@ -1,9 +1,7 @@
 id,type,name,status,description,epic,duration,start_time
-1,TASK,Имя2,NEW,Описание,-,null,null
-2,TASK,Имя3,NEW,Описание,-,null,null
-3,EPIC,Эпик4,NEW,Описание эпика,-,null,null
-4,EPIC,Эпик5,NEW,Описание эпика,-,null,null
-5,EPIC,Эпик6,NEW,Описание эпика,-,null,null
-6,SUBTASK,Subtask,NEW,desc,3,null,null
+1,TASK,Task,NEW,desc,-,10,2022-05-16T16:06:17.194694400
+2,EPIC,Epic,NEW,desc,-,20,2022-05-16T16:16:17.194694400
+3,SUBTASK,SubTask1,NEW,desc,2,10,2022-05-16T16:16:17.194694400
+4,SUBTASK,SubTask2,NEW,desc,2,10,2022-05-16T16:26:17.194694400
 
-6,
+1,2,

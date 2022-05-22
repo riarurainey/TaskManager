@@ -2,9 +2,9 @@ package managers;
 
 import exceptions.ManagerSaveException;
 import model.Epic;
-import model.Status;
 import model.SubTask;
 import model.Task;
+import model.Status;
 import model.TypeTasks;
 
 import java.io.BufferedReader;
@@ -20,19 +20,20 @@ import java.util.Map;
 
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
-    private final Path path;
+    private final String fileName;
 
-    public FileBackedTasksManager(Path path) {
-        this.path = path;
+    public FileBackedTasksManager(String fileName) {
+        this.fileName = fileName;
     }
 
-    protected static FileBackedTasksManager loadFromFile(Path path) {
-        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(path);
+    public static FileBackedTasksManager loadFromFile(String fileName) {
+
+        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(fileName);
         List<String> listOfTasks = new ArrayList<>();
         String idNumbers = "";
         String str;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(path.toFile()))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(Path.of(fileName).toFile()))) {
             while ((str = reader.readLine()) != null) {
                 if (!str.isEmpty() && !str.startsWith("id")) {
                     listOfTasks.add(str);
@@ -80,6 +81,21 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
+    public Task updateTask(Task task) {
+        return super.updateTask(task);
+    }
+
+    @Override
+    public Epic updateEpic(Epic epic) {
+        return super.updateEpic(epic);
+    }
+
+    @Override
+    public SubTask updateSubTask(SubTask subTask) {
+        return super.updateSubTask(subTask);
+    }
+
+    @Override
     public Task findTaskById(long id) {
         history.add(tasks.get(id));
         save();
@@ -122,9 +138,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         return newSubtask;
     }
 
-    //метод сохраняет задачи и историю в файл
-    void save() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path.toFile()))) {
+    //Метод сохраняет задачи и историю в файл
+    protected void save() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(Path.of(fileName).toFile()))) {
             writer.write("id,type,name,status,description,epic,duration,start_time");
 
             for (Task taskEntry : tasks.values()) {
@@ -152,7 +168,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     //Метод добавляет задачи в мапы
-    void putInMap(Task task) {
+    protected void putInMap(Task task) {
         if (task.getTypeTasks() == TypeTasks.TASK) {
             tasks.put(task.getId(), task);
         } else if (task.getTypeTasks() == TypeTasks.EPIC) {
@@ -165,7 +181,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
 
     //Метод возвращает задачу из строки
-    Task taskFromString(String value) {
+    private Task taskFromString(String value) {
         String[] strings = value.split(",");
         String name = strings[2];
         String description = strings[4];
@@ -186,20 +202,16 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             epicId = Long.parseLong(strings[5]);
         }
 
-        switch (TypeTasks.valueOf(strings[1])) {
-            case TASK:
-                return new Task(name, description, id, status, duration, startTime);
-            case EPIC:
-                return new Epic(name, description, id, status, duration, startTime);
-            case SUBTASK:
-                return new SubTask(name, description, id, status, epicId, duration, startTime);
-        }
-        return null;
+        return switch (TypeTasks.valueOf(strings[1])) {
+            case TASK -> new Task(name, description, id, status, duration, startTime);
+            case EPIC -> new Epic(name, description, id, status, duration, startTime);
+            case SUBTASK -> new SubTask(name, description, id, status, epicId, duration, startTime);
+        };
     }
 
 
     //Метод восоздает историю из листа ид
-    void restoreHistory(List<Long> historyId) {
+    protected void restoreHistory(List<Long> historyId) {
         for (Long id : historyId) {
             if (tasks.containsKey(id)) {
                 history.add(tasks.get(id));
@@ -220,7 +232,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
 
     //Метод возращает из строки лист с ид задачами
-    static List<Long> fromStringToListHistoryId(String value) {
+    private static List<Long> fromStringToListHistoryId(String value) {
 
         String[] strings = value.split(",");
         List<Long> list = new ArrayList<>();
@@ -231,8 +243,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     //Метод превращения истории в строку
-    static String historyToString(HistoryManager manager) {
-        StringBuilder builder = new StringBuilder("");
+    private static String historyToString(HistoryManager manager) {
+        StringBuilder builder = new StringBuilder();
         for (Task task : manager.getHistory()) {
             builder.append(task.getId());
             builder.append(",");
@@ -247,7 +259,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
 
     //Метод превращения обычной задачи и эпика в строку
-    public String toSaveToString(Task task) {
+    private String toSaveToString(Task task) {
         return String.format("%s,%s,%s,%s,%s,%s,%s,%s",
                 task.getId(),
                 task.getTypeTasks(),
@@ -261,7 +273,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     //Метод превращения подзадачи в строку
-    public String toSaveToStringSubtask(SubTask subTask) {
+    private String toSaveToStringSubtask(SubTask subTask) {
         return String.format("%s,%s,%s,%s,%s,%s,%s,%s",
                 subTask.getId(),
                 subTask.getTypeTasks(),
@@ -272,6 +284,5 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 subTask.getDuration(),
                 subTask.getStartTime());
     }
-
 }
 

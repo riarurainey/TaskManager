@@ -2,7 +2,6 @@ package managers;
 
 import model.Epic;
 import model.Status;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +21,8 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
 
     @Test
     void check_Epic_Of_SubTask() {
-        assertEquals(epic.getId(), subTask1.getEpicId(), "Не найден эпик у подзадачи");
+        assertEquals(epic.getId(), subTask1.getEpicId(),
+                "Не найден эпик у подзадачи");
     }
 
 
@@ -71,5 +71,4 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         assertEquals(Status.IN_PROGRESS, epic.getStatus(), "Статус не соответствует");
 
     }
-
 }

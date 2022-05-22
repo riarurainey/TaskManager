@@ -1,9 +1,9 @@
 package managers;
 
 import model.Epic;
-import model.Status;
 import model.SubTask;
 import model.Task;
+import model.Status;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -65,11 +65,12 @@ class HistoryManagerTest {
         historyManager.add(task);
         historyManager.add(epic);
         historyManager.add(subTask);
-
-
         historyManager.remove(task.getId());
-        assertEquals(2, historyManager.getHistory().size(), "Размер истории не уменьшился, элемент не удален");
-        assertNotEquals(task, historyManager.getHistory().get(0), "Первый элемент не удалился из истории");
+
+        assertEquals(2, historyManager.getHistory().size(),
+                "Размер истории не уменьшился, элемент не удален");
+        assertNotEquals(task, historyManager.getHistory().get(0),
+                "Первый элемент не удалился из истории");
 
     }
 
@@ -78,10 +79,12 @@ class HistoryManagerTest {
         historyManager.add(task);
         historyManager.add(epic);
         historyManager.add(subTask);
-
         historyManager.remove(epic.getId());
-        assertEquals(2, historyManager.getHistory().size(), "Размер истории не уменьшился, элемент не удален");
-        assertNotEquals(epic, historyManager.getHistory().get(1), "Средний элемент не удалился из истории");
+
+        assertEquals(2, historyManager.getHistory().size(),
+                "Размер истории не уменьшился, элемент не удален");
+        assertNotEquals(epic, historyManager.getHistory().get(1),
+                "Средний элемент не удалился из истории");
 
     }
 
@@ -92,9 +95,10 @@ class HistoryManagerTest {
         historyManager.add(subTask);
         historyManager.remove(subTask.getId());
 
-        assertEquals(2, historyManager.getHistory().size(), "Размер истории не уменьшился, элемент не удален");
-        assertNotEquals(subTask, historyManager.getHistory().get(historyManager.getHistory().size() - 1), "Последний элемент не удалился из истории");
+        assertEquals(2, historyManager.getHistory().size(),
+                "Размер истории не уменьшился, элемент не удален");
+        assertNotEquals(subTask, historyManager.getHistory().get(historyManager.getHistory().size() - 1),
+                "Последний элемент не удалился из истории");
 
     }
-
 }

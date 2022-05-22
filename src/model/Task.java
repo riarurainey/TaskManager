@@ -3,7 +3,6 @@ package model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-
 public class Task {
 
     private String name;
@@ -12,13 +11,13 @@ public class Task {
     private Status status;
     private Long duration;
     private LocalDateTime startTime;
-    TypeTasks typeTasks;
+    private TypeTasks typeTasks;
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
-        typeTasks = TypeTasks.TASK;
+        this.typeTasks = TypeTasks.TASK;
     }
 
     public Task(String name, String description, Long duration, LocalDateTime startTime) {
@@ -60,6 +59,10 @@ public class Task {
         typeTasks = TypeTasks.TASK;
     }
 
+
+    public void setTypeTasks(TypeTasks typeTasks) {
+        this.typeTasks = typeTasks;
+    }
 
     public void setName(String name) {
         this.name = name;

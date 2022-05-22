@@ -47,7 +47,7 @@ public interface TaskManager {
     //Вывод всех подзадач Эпика
     List<SubTask> getEpicsSubtask(long id);
 
-    // Показать список всех задач
+    // Показать список всех задач/эпиков/подзадач
     List<Task> getAllTasks();
 
     // Удалить сразу все задачи

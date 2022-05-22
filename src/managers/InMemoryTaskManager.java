@@ -16,9 +16,10 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class InMemoryTaskManager implements TaskManager {
-    HashMap<Long, Task> tasks = new HashMap<>();
-    HashMap<Long, Epic> epics = new HashMap<>();
-    HistoryManager history = Managers.getDefaultHistory();
+    protected HashMap<Long, Task> tasks = new HashMap<>();
+    protected HashMap<Long, Epic> epics = new HashMap<>();
+    protected HistoryManager history = Managers.getDefaultHistory();
+
 
     private static long id = 1;
 
@@ -215,8 +216,9 @@ public class InMemoryTaskManager implements TaskManager {
         return prioritizedTasks;
     }
 
+
     //Изменение времени у эпика
-   private void changeEpicTimeFields(Epic epic) {
+    private void changeEpicTimeFields(Epic epic) {
         Long epicsDuration = null;
         LocalDateTime epicEndTime = null;
         LocalDateTime epicStartTime = null;

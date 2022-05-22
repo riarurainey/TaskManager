@@ -10,21 +10,22 @@ public class Epic extends Task {
 
     public Epic(String name, String description) {
         super(name, description);
-        typeTasks = TypeTasks.EPIC;
+        setTypeTasks(TypeTasks.EPIC);
     }
 
     public Epic(String name, String description, Long duration, LocalDateTime startTime) {
         super(name, description, duration, startTime);
-        typeTasks = TypeTasks.EPIC;
+        setTypeTasks(TypeTasks.EPIC);
     }
 
     public Epic(String name, String description, Long id, Long duration, LocalDateTime startTime) {
         super(name, description, id, duration, startTime);
+        setTypeTasks(TypeTasks.EPIC);
     }
 
     public Epic(String name, String description, Long id, Status status, Long duration, LocalDateTime startTime) {
         super(name, description, id, status, duration, startTime);
-        typeTasks = TypeTasks.EPIC;
+        setTypeTasks(TypeTasks.EPIC);
 
     }
 
@@ -37,21 +38,19 @@ public class Epic extends Task {
         return endTime;
     }
 
-
-
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
-   @Override
-   public boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
         return super.equals(obj);
-   }
+    }
 
-   @Override
-   public int hashCode() {
+    @Override
+    public int hashCode() {
         return super.hashCode();
-   }
+    }
 
     @Override
     public String toString() {
