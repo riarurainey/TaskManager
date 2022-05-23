@@ -35,53 +35,6 @@ public class HttpTaskManager extends FileBackedTasksManager {
         }
     }
 
-
-    @Override
-    public Task deleteTaskById(long id) {
-        return super.deleteTaskById(id);
-    }
-
-    @Override
-    public Epic deleteEpicById(long id) {
-        return super.deleteEpicById(id);
-    }
-
-    @Override
-    public SubTask deleteSubTaskById(long id) {
-        return super.deleteSubTaskById(id);
-    }
-
-    @Override
-    public Task updateTask(Task task) {
-        return super.updateTask(task);
-    }
-
-    @Override
-    public Epic updateEpic(Epic epic) {
-        return super.updateEpic(epic);
-    }
-
-    @Override
-    public SubTask updateSubTask(SubTask subTask) {
-        return super.updateSubTask(subTask);
-    }
-
-    @Override
-    public Task createTask(Task task) {
-        return super.createTask(task);
-    }
-
-    @Override
-    public Epic createEpic(Epic epic) {
-        return super.createEpic(epic);
-
-    }
-
-    @Override
-    public SubTask createSubTask(SubTask subTask) {
-        return super.createSubTask(subTask);
-    }
-
     @Override
     public void save() {
         String jsonTasks = gson.toJson(new ArrayList<>(tasks.values()));
@@ -112,11 +65,6 @@ public class HttpTaskManager extends FileBackedTasksManager {
         }
     }
 
-    @Override
-    protected void putInMap(Task task) {
-        super.putInMap(task);
-    }
-
     public void load() {
 
         try {
@@ -145,7 +93,6 @@ public class HttpTaskManager extends FileBackedTasksManager {
             }.getType());
 
             restoreHistory(history);
-
 
         } catch (NullPointerException | IOException | InterruptedException e) {
             e.printStackTrace();

@@ -121,7 +121,7 @@ public class HttpTaskServer {
     public final class EpicHandler implements HttpHandler {
 
         @Override
-        public void handle(HttpExchange exchange)  {
+        public void handle(HttpExchange exchange) {
 
             try (exchange) {
                 String method = exchange.getRequestMethod();
